@@ -1,0 +1,54 @@
+.check-status {
+  width: 100px;
+}
+
+.disconnected {
+  background: #ffd5d5;
+}
+
+.connected {
+  background: #cbffb5;
+}
+
+.table-content thead {
+  visibility: hidden;
+}
+
+.fixed-header {
+  position: sticky;
+  background: #fff;
+  top: 0;
+  z-index: 2;
+}
+.table-cell {
+  position: relative;
+}
+.table-cell-data {
+ position: relative;
+ transform: translate(0, 25%);
+ width: 100%;
+    /* top: 50%; */
+    /* left: 50%; */
+}
+.test-colors{
+  border-radius: 100%;border: 2px solid #fff;
+  -webkit-transition: background-color 500ms linear;
+  -ms-transition: background-color 500ms linear;
+  transition: background-color 500ms linear;
+}
+.auto-hide-alert {
+  position: fixed;
+  z-index: 10;
+  right: 1%;
+  bottom: 0%;
+  width: min(50%, 250px);
+}
+.auto-hide-alert .alert {
+  position: relative;
+  display: none;
+}
+.auto-hide-alert .btn-close {
+  position: absolute;
+  right: 1%;
+  top: 2%;
+}

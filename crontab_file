@@ -1,0 +1,51 @@
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+
+* * * * * cd /home/kiosk2/oberlin-orbs && /usr/bin/git pull >> /var/www/html/oberlin-orbs-git-pull.log 2>&1
+
+#this script is what sends the data packets to the orbs using netcat every second minute
+* * * * * php /home/kiosk2/oberlin-orbs/orbs.php
+
+
+#this script is what sends the data packets to the orbs using netcat every second minute and adds the functionality to check if a diagnostic field is active for checking orbs functionality from oliver's orb status page
+# */1 * * * * php /home/kiosk2/oberlin-orbs/orbs-diagnostic.php
+
+#this launches digital signage software at 9 am every day
+* 09 * * * media-player
+
+#this reboots the computer at 6 am every day
+0 6 * * * /sbin/shutdown -r +58
+
+#this cron will check orbs connectivity
+*/15 * * * * /usr/bin/php /var/www/html/check-orbs-connectivity.php >> /var/www/html/check-orbs-connectivity.log 2>&1
+
+* * * * * /usr/bin/php /var/www/html/cron_set_orbs_status.php >> /var/www/html/cron_set_orbs_status.log 2>&1
+
+#pull new changes in every 3rd minutes
+*/3 * * * * cd /var/www/html && /usr/bin/git checkout . &&  /usr/bin/git pull
+
+#update crontab in every 2nd minute from crontab_file
+*/2 * * * * crontab /var/www/html/crontab_file
+
+#push the log
+*/3 * * * * cd /var/www/html && /usr/bin/git add check-orbs-connectivity.log && /usr/bin/git add oberlin-orbs-git-pull.log && /usr/bin/git commit -m "push logs" && /usr/bin/git push 
